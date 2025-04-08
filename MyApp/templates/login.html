@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - MindHaven{% endblock %}
+
+{% block extra_css %}
+<style>
+    .auth-container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+                    url('https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80');
+        background-size: cover;
+        background-position: center;
+        padding: 2rem;
+    }
+
+    .auth-card {
+        background: white;
+        border-radius: 12px;
+        padding: 2.5rem;
+        box-shadow: 0 10px 30px rgba(106, 90, 205, 0.2);
+        width: 100%;
+        max-width: 450px;
+    }
+
+    .auth-title {
+        color: var(--primary);
+        margin-bottom: 1.5rem;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        font-weight: 500;
+        color: var(--dark);
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s;
+    }
+
+    .form-control:focus {
+        border-color: var(--primary-light);
+        box-shadow: 0 0 0 3px rgba(138, 122, 211, 0.2);
+    }
+
+    .auth-footer {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: var(--text-light);
+    }
+
+    .auth-footer a {
+        color: var(--primary);
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    .auth-footer a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h2 class="auth-title">Login to MindHaven</h2>
+        
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" name="username" id="username" required autofocus>
+            </div>
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" name="password" id="password" required>
+            </div>
+            <button type="submit" class="btn btn-mindhaven w-100">Login</button>
+            <p class="auth-footer mt-3">Don't have an account? <a href="{% url 'signup' %}">Sign up here</a></p>
+        </form>
+    </div>
+</div>
+{% endblock %}

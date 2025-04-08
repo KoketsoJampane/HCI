@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindHaven | sanctuary for your mind!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6a5acd;
+            --primary-light: #8a7ad3;
+            --secondary: #ff6b6b;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+            --text: #2c3e50;
+            --text-light: #7f8c8d;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --space-bg: rgba(255, 255, 255, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+            flex: 1;
+        }
+
+        /* Heart Logo Styles */
+        .nav-heart {
+            position: relative;
+            width: 30px;
+            height: 26px;
+            margin-right: 10px;
+        }
+
+        .nav-heart:before, 
+        .nav-heart:after {
+            position: absolute;
+            content: "";
+            left: 15px;
+            top: 0;
+            width: 15px;
+            height: 24px;
+            background: var(--primary-light);
+            border-radius: 15px 15px 0 0;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .nav-heart:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        .nav-crack {
+            position: absolute;
+            width: 4px;
+            height: 20px;
+            background: white;
+            left: 13px;
+            top: 3px;
+            transform: rotate(15deg);
+            z-index: 2;
+        }
+
+        .nav-tape {
+            position: absolute;
+            width: 20px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.7);
+            left: 5px;
+            top: 10px;
+            z-index: 1;
+            transform: rotate(-10deg);
+            border-radius: 2px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--dark);
+            color: white;
+            padding: 2rem 1rem;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 0 0.5rem;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            margin-right: 0.75rem;
+            color: var(--primary-light);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .nav-menu {
+            margin-top: 2rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .nav-item i {
+            margin-right: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .user-profile {
+            position: absolute;
+            bottom: 2rem;
+            left: 1rem;
+            right: 1rem;
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+            font-weight: bold;
+        }
+
+        .user-name {
+            flex: 1;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .logout-btn:hover {
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .welcome-banner {
+            background: var(--primary);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-banner::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .welcome-banner h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .welcome-banner p {
+            opacity: 0.9;
+            max-width: 70%;
+            position: relative;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(106, 90, 205, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        /* Mood Tracker */
+        .mood-scale {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+        }
+
+        .mood-point {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .mood-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+            transition: all 0.3s;
+            font-size: 0.8rem;
+        }
+
+        .mood-point:hover .mood-number {
+            transform: scale(1.2);
+            background: var(--primary-light);
+            color: white;
+        }
+
+        .mood-point.selected .mood-number {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.3);
+        }
+
+        .mood-label {
+            font-size: 0.7rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .mood-feedback {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: rgba(106, 90, 205, 0.1);
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        /* Journal */
+        .journal-entry {
+            width: 100%;
+            height: 150px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            resize: none;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .journal-entry:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .save-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: 500;
+        }
+
+        .save-btn:hover {
+            background: var(--primary-light);
+        }
+
+        .journal-saved {
+            display: none;
+            color: #27ae60;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* AI Chat */
+        .chat-container {
+            height: 250px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            overflow-y: auto;
+            background: white;
+        }
+
+        .chat-message {
+            margin-bottom: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            max-width: 80%;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .user-message {
+            background: var(--primary);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+
+        .ai-message {
+            background: #f0f0f0;
+            margin-right: auto;
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: inherit;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .send-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .send-btn:hover {
+            background: var(--primary-light);
+        }
+
+        /* Notifications */
+        .notifications-container {
+            display: none;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .notification {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+        }
+
+        .notification-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(106, 90, 205, 0.1);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .notification-content {
+            flex: 1;
+            font-size: 0.9rem;
+        }
+
+        .notification-time {
+            font-size: 0.7rem;
+            color: var(--text-light);
+            margin-top: 0.25rem;
+        }
+
+        /* Bible Verses */
+        .bible-verse-container {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .bible-verse {
+            font-style: italic;
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .bible-reference {
+            font-weight: 500;
+            color: var(--primary);
+            text-align: right;
+        }
+
+        /* Age Spaces Section */
+        .spaces-section {
+            margin-top: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .section-title::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .spaces-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .space-card {
+            background: var(--space-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .space-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .space-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary);
+        }
+
+        .space-card.teen::before {
+            background: #3498db;
+        }
+
+        .space-card.adult::before {
+            background: #2ecc71;
+        }
+
+        .space-card.senior::before {
+            background: #9b59b6;
+        }
+
+        .space-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .space-card.teen .space-icon {
+            color: #3498db;
+        }
+
+        .space-card.adult .space-icon {
+            color: #2ecc71;
+        }
+
+        .space-card.senior .space-icon {
+            color: #9b59b6;
+        }
+
+        .space-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .space-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .space-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary);
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .space-card.teen .space-link {
+            color: #3498db;
+        }
+
+        .space-card.adult .space-link {
+            color: #2ecc71;
+        }
+
+        .space-card.senior .space-link {
+            color: #9b59b6;
+        }
+
+        .space-link i {
+            margin-left: 0.5rem;
+            transition: transform 0.3s;
+        }
+
+        .space-link:hover i {
+            transform: translateX(3px);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+            animation: modalFadeIn 0.3s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .modal-description {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .social-links {
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            margin: 0 10px;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--light);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .app-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                position: fixed;
+                bottom: 1rem;
+                right: 1rem;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                background: var(--primary);
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+                z-index: 50;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .spaces-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .welcome-banner p {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <div class="nav-heart">
+                    <div class="nav-crack"></div>
+                    <div class="nav-tape"></div>
+                </div>
+                <div class="logo-text">MindHaven</div>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Progress</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-book"></i>
+                    <span>Journal</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-comments"></i>
+                    <span>Therapy</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifications</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </div>
+            
+            <div class="user-profile">
+                <div class="user-avatar" id="user-avatar">U</div>
+                <div class="user-name" id="user-name">User</div>
+                <button class="logout-btn" id="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Welcome Banner -->
+            <div class="welcome-banner">
+                <h1>Welcome back, <span id="welcome-name">''</span></h1>
+                <p>Your mental wellness journey continues today. How are you feeling?</p>
+            </div>
+            
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Mood Tracker -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Mood Tracker</h3>
+                        <div class="card-icon">
+                            <i class="fas fa-smile"></i>
+                        </div>
+                    </div>
+                    <p>How are you feeling today?</p>
+                    <div class="mood-scale" id="mood-scale">
+                        <div class="mood-point" data-value="0">
+                            <div class="mood-number">0</div>
+                            <div class="mood-label">Awful</div>
+                        </div>
+                        <div class="mood-point" data-value="1">
+                            <div class="mood-number">1</div>
+                        </div>
+                        <div class="mood-point" data-value="2">
+                            <div class="mood-number">2</div>
+                        </div>
+                        <div class="mood-point" data-value="3">
+                            <div class="mood-number">3</div>
+                            <div class="mood-label">Bad</div>
+                        </div>
+                        <div class="mood-point" data-value="4">
+                            <div class="mood-number">4</div>
+                        </div>
+                        <div class="mood-point" data-value="5">
+                            <div class="mood-number">5</div>
+                            <div class="mood-label">Okay</div>
+                        </div>
+                        <div class="mood-point" data-value="6">
+                            <div class="mood-number">6</div>
+                        </div>
+                        <div class="mood-point" data-value="7">
+                            <div class="mood-number">7</div>
+                            <div class="mood-label">Good</div>
+                        </div>
+                        <div class="mood-point" data-value="8">
+                            <div class="mood-number">8</div>
+                        </div>
+                        <div class="mood-point" data-value="9">
+                            <div class="mood-number">9</div>
+                        </div>
+                        <div class="mood-point" data-value="10">
+                            <div class="mood-number">10</div>
+                            <div class="mood-label">Great</div>
+                        </div>
+                    </div>
+                    <div class="mood-feedback" id="mood-feedback"></div>
+                </div>
+                
+                <!-- Journal -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Daily Journal</h3>
+                        <div class="card-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                    </div>
+                    <p>Express your thoughts and feelings:</p>
+                    <textarea class="journal-entry" id="journal-entry" placeholder="Today I feel..."></textarea>
+                    <button class="save-btn" id="save-journal">
+                        <i class="fas fa-save"></i> Save Entry
+                    </button>
+                    <div class="journal-saved" id="journal-saved">
+                        <i class="fas fa-check"></i> Entry saved successfully
+                    </div>
+                </div>
+                
+                <!-- AI Therapist -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">AI Therapist</h3>
+                        <div class="card-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                    </div>
+                    <div class="chat-container" id="chat-container">
+                        <div class="chat-message ai-message">
+                            Hello! I'm here to listen and help. How are you feeling today?
+                        </div>
+                    </div>
+                    <div class="chat-input-container">
+                        <input type="text" class="chat-input" id="chat-input" placeholder="Type your message...">
+                        <button class="send-btn" id="send-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Notifications -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Notifications</h3>
+                        <div class="card-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                    </div>
+                    <button class="save-btn" id="notifications-btn" style="width: 100%;">
+                        <i class="fas fa-bell"></i> View Notifications
+                    </button>
+                    <div class="notifications-container" id="notifications-container">
+                        <div class="notification">
+                            <div class="notification-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="notification-content">
+                                <p>You matter. Take a moment to breathe.</p>
+                                <div class="notification-time">Just now</div>
+                            </div>
+                        </div>
+                        <div class="notification">
+                            <div class="notification-icon">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="notification-content">
+                                <p>Remember to check in with your feelings today.</p>
+                                <div class="notification-time">Today</div>
+                            </div>
+                        </div>
+                        <div class="notification">
+                            <div class="notification-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="notification-content">
+                                <p>You're doing great! Keep going.</p>
+                                <div class="notification-time">Yesterday</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bible Verses -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Spiritual Guidance</h3>
+                        <div class="card-icon">
+                            <i class="fas fa-bible"></i>
+                        </div>
+                    </div>
+                    <p>Get a personalized verse for your current mood:</p>
+                    <button class="save-btn" id="bible-verse-btn" style="width: 100%;">
+                        <i class="fas fa-book-bible"></i> Get Encouragement
+                    </button>
+                    <div class="bible-verse-container" id="bible-verse-container">
+                        <p class="bible-verse">"The Lord is close to the brokenhearted and saves those who are crushed in spirit."</p>
+                        <p class="bible-reference">Psalm 34:18</p>
+                    </div>
+                </div>
+                
+                <!-- Quick Resources -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Quick Resources</h3>
+                        <div class="card-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                    </div>
+                    <p>Helpful tools for your wellness journey:</p>
+                    <button class="save-btn" style="width: 100%; margin-bottom: 0.5rem; background: #3498db;">
+                        <i class="fas fa-head-side-cough"></i> Breathing Exercises
+                    </button>
+                    <button class="save-btn" style="width: 100%; margin-bottom: 0.5rem; background: #2ecc71;">
+                        <i class="fas fa-spa"></i> Meditation Guide
+                    </button>
+                    <button class="save-btn" style="width: 100%; background: #9b59b6;">
+                        <i class="fas fa-book"></i> Recommended Reading
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Age-Specific Spaces -->
+            <div class="spaces-section">
+                <h2 class="section-title">Your Safe Spaces</h2>
+                <p style="margin-bottom: 1.5rem;">Connect with communities tailored to your life stage and needs:</p>
+                
+                <div class="spaces-grid">
+                    <div class="space-card teen" id="teen-space">
+                        <div class="space-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h3 class="space-title">Teen Space</h3>
+                        <p class="space-description">A supportive community for teenagers navigating school, relationships, and self-discovery.</p>
+                        <a href="#" class="space-link">
+                            Explore space <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="space-card adult" id="adult-space">
+                        <div class="space-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <h3 class="space-title">Adult Space</h3>
+                        <p class="space-description">Resources and support for adults managing work, family, and personal growth.</p>
+                        <a href="#" class="space-link">
+                            Explore space <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="space-card senior" id="senior-space">
+                        <div class="space-icon">
+                            <i class="fas fa-user-friends"></i>
+                        </div>
+                        <h3 class="space-title">Senior Space</h3>
+                        <p class="space-description">A compassionate community for seniors facing life transitions and aging challenges.</p>
+                        <a href="#" class="space-link">
+                            Explore space <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 MindHaven. All rights reserved.</p>
+        <div class="social-links">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </footer>
+    
+    <!-- Space Modals -->
+    <div class="modal" id="teen-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-teen-modal">&times;</button>
+            <h3 class="modal-title">Teen Space</h3>
+            <div class="modal-description">
+                <p>Welcome to our dedicated space for teenagers (ages 13-19). This is a safe environment where you can:</p>
+                <ul style="margin: 1rem 0 1rem 1.5rem;">
+                    <li>Connect with peers facing similar challenges</li>
+                    <li>Access age-appropriate mental health resources</li>
+                    <li>Learn coping strategies for school stress and relationships</li>
+                    <li>Explore your identity in a supportive environment</li>
+                </ul>
+                <p>All content is moderated by mental health professionals to ensure a safe, supportive space for your growth.</p>
+            </div>
+            <button class="save-btn" style="background: #3498db; width: 100%;">
+                <i class="fas fa-door-open"></i> Enter Teen Space
+            </button>
+        </div>
+    </div>
+    
+    <div class="modal" id="adult-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-adult-modal">&times;</button>
+            <h3 class="modal-title">Adult Space</h3>
+            <div class="modal-description">
+                <p>Our Adult Space (ages 20-64) provides resources tailored to the unique challenges of adulthood:</p>
+                <ul style="margin: 1rem 0 1rem 1.5rem;">
+                    <li>Work-life balance strategies</li>
+                    <li>Parenting and relationship support</li>
+                    <li>Financial stress management tools</li>
+                    <li>Career development resources</li>
+                    <li>Midlife transition guidance</li>
+                </ul>
+                <p>Join discussions led by therapists specializing in adult mental health.</p>
+            </div>
+            <button class="save-btn" style="background: #2ecc71; width: 100%;">
+                <i class="fas fa-door-open"></i> Enter Adult Space
+            </button>
+        </div>
+    </div>
+    
+    <div class="modal" id="senior-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-senior-modal">&times;</button>
+            <h3 class="modal-title">Senior Space</h3>
+            <div class="modal-description">
+                <p>Our Senior Space (65+) offers compassionate support for later life challenges:</p>
+                <ul style="margin: 1rem 0 1rem 1.5rem;">
+                    <li>Coping with retirement and life transitions</li>
+                    <li>Managing grief and loss</li>
+                    <li>Maintaining cognitive health</li>
+                    <li>Building social connections</li>
+                    <li>Navigating healthcare systems</li>
+                </ul>
+                <p>This space is designed with accessibility in mind, featuring larger text options and simplified navigation.</p>
+            </div>
+            <button class="save-btn" style="background: #9b59b6; width: 100%;">
+                <i class="fas fa-door-open"></i> Enter Senior Space
+            </button>
+        </div>
+    </div>
+    
+    <!-- Mobile Menu Button (hidden on desktop) -->
+    <button class="mobile-menu-btn" id="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <script>
+        // Mood Tracker Functionality
+        const moodPoints = document.querySelectorAll('.mood-point');
+        const moodFeedback = document.getElementById('mood-feedback');
+        const moodDescriptions = [
+            "Awful - I'm really struggling",
+            "Very bad - Having a very difficult time",
+            "Bad - Not feeling good at all",
+            "Somewhat bad - Below average mood",
+            "A little low - Could be better",
+            "Neutral - I'm okay, not great but not bad",
+            "Pretty good - Feeling decent",
+            "Good - Having a nice day",
+            "Very good - In high spirits",
+            "Great - Feeling wonderful",
+            "Excellent - I'm feeling amazing!"
+        ];
+
+        moodPoints.forEach(point => {
+            point.addEventListener('click', () => {
+                // Remove selected class from all points
+                moodPoints.forEach(p => p.classList.remove('selected'));
+                
+                // Add selected class to clicked point
+                point.classList.add('selected');
+                
+                // Get the mood value
+                const moodValue = parseInt(point.getAttribute('data-value'));
+                
+                // Display feedback
+                moodFeedback.innerHTML = `
+                    <strong>Current Mood:</strong> ${moodValue}/10<br>
+                    ${moodDescriptions[moodValue]}
+                `;
+                
+                // Store mood in localStorage
+                localStorage.setItem('currentMood', moodValue);
+            });
+        });
+
+        // Journal Functionality
+        const journalEntry = document.getElementById('journal-entry');
+        const saveJournalBtn = document.getElementById('save-journal');
+        const journalSaved = document.getElementById('journal-saved');
+
+        saveJournalBtn.addEventListener('click', () => {
+            const entry = journalEntry.value.trim();
+            if (entry) {
+                // Save to localStorage
+                const now = new Date();
+                const dateStr = now.toLocaleDateString();
+                const timeStr = now.toLocaleTimeString();
+                
+                let journalEntries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+                journalEntries.push({
+                    date: dateStr,
+                    time: timeStr,
+                    content: entry
+                });
+                localStorage.setItem('journalEntries', JSON.stringify(journalEntries));
+                
+                // Show saved message
+                journalSaved.style.display = 'block';
+                setTimeout(() => {
+                    journalSaved.style.display = 'none';
+                }, 3000);
+                
+                // Clear the textarea
+                journalEntry.value = '';
+            }
+        });
+
+        // AI Chatbox Functionality
+        const chatContainer = document.getElementById('chat-container');
+        const chatInput = document.getElementById('chat-input');
+        const sendBtn = document.getElementById('send-btn');
+
+        function addMessage(message, isUser) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('chat-message');
+            messageDiv.classList.add(isUser ? 'user-message' : 'ai-message');
+            messageDiv.textContent = message;
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function getAIResponse(userMessage) {
+            // Simple response logic - in a real app, this would connect to an AI service
+            userMessage = userMessage.toLowerCase();
+            
+            if (userMessage.includes('sad') || userMessage.includes('depressed') || userMessage.includes('unhappy')) {
+                return "I'm sorry to hear you're feeling this way. Remember that it's okay to feel sad sometimes. Would you like to talk more about what's bothering you?";
+            } else if (userMessage.includes('happy') || userMessage.includes('joy') || userMessage.includes('good')) {
+                return "I'm glad you're feeling positive! What's bringing you happiness today?";
+            } else if (userMessage.includes('anxious') || userMessage.includes('nervous') || userMessage.includes('worried')) {
+                return "Anxiety can be challenging. Try taking some deep breaths - inhale for 4 seconds, hold for 4, exhale for 6. Would you like to share what's on your mind?";
+            } else if (userMessage.includes('angry') || userMessage.includes('mad') || userMessage.includes('frustrated')) {
+                return "Anger is a natural emotion. It might help to step away for a moment and do something calming. What's making you feel this way?";
+            } else if (userMessage.includes('thank') || userMessage.includes('appreciate')) {
+                return "You're very welcome. I'm here to support you whenever you need.";
+            } else if (userMessage.includes('hello') || userMessage.includes('hi') || userMessage.includes('hey')) {
+                return "Hello there! How can I help you today?";
+            } else {
+                const genericResponses = [
+                    "I hear you. Tell me more about that.",
+                    "That's interesting. How does that make you feel?",
+                    "I'm here to listen. Would you like to elaborate?",
+                    "Thank you for sharing. What else is on your mind?",
+                    "I understand. Can you tell me more about this experience?"
+                ];
+                return genericResponses[Math.floor(Math.random() * genericResponses.length)];
+            }
+        }
+
+        sendBtn.addEventListener('click', () => {
+            const message = chatInput.value.trim();
+            if (message) {
+                addMessage(message, true);
+                chatInput.value = '';
+                
+                // Simulate AI thinking
+                setTimeout(() => {
+                    const response = getAIResponse(message);
+                    addMessage(response, false);
+                }, 1000);
+            }
+        });
+
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendBtn.click();
+            }
+        });
+
+        // Notifications Functionality
+        const notificationsBtn = document.getElementById('notifications-btn');
+        const notificationsContainer = document.getElementById('notifications-container');
+
+        notificationsBtn.addEventListener('click', () => {
+            if (notificationsContainer.style.display === 'block') {
+                notificationsContainer.style.display = 'none';
+                notificationsBtn.innerHTML = '<i class="fas fa-bell"></i> View Notifications';
+            } else {
+                notificationsContainer.style.display = 'block';
+                notificationsBtn.innerHTML = '<i class="fas fa-bell-slash"></i> Hide Notifications';
+            }
+        });
+
+        // Bible Verses Functionality
+        const bibleVerseBtn = document.getElementById('bible-verse-btn');
+        const bibleVerseContainer = document.getElementById('bible-verse-container');
+        const bibleVerseText = document.querySelector('.bible-verse');
+        const bibleVerseRef = document.querySelector('.bible-reference');
+
+        const verses = [
+            { text: '"Come to me, all you who are weary and burdened, and I will give you rest."', ref: "Matthew 11:28" },
+            { text: '"The Lord is my shepherd, I lack nothing."', ref: "Psalm 23:1" },
+            { text: '"Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God."', ref: "Philippians 4:6" },
+            { text: '"I can do all this through him who gives me strength."', ref: "Philippians 4:13" },
+            { text: '"Cast all your anxiety on him because he cares for you."', ref: "1 Peter 5:7" },
+            { text: '"Peace I leave with you; my peace I give you. I do not give to you as the world gives. Do not let your hearts be troubled and do not be afraid."', ref: "John 14:27" },
+            { text: '"The Lord is close to the brokenhearted and saves those who are crushed in spirit."', ref: "Psalm 34:18" },
+            { text: '"But those who hope in the Lord will renew their strength. They will soar on wings like eagles; they will run and not grow weary, they will walk and not be faint."', ref: "Isaiah 40:31" },
+            { text: '" When the time is right, I the Lord will make it happen"', ref:"Isaiah 60:22"},
+            { text: '"I can do all things through Christ who gives me strength"',ref:"Phillipians 4:16"}
+        ];
+
+        bibleVerseBtn.addEventListener('click', () => {
+            // Get current mood to suggest appropriate verse
+            const currentMood = localStorage.getItem('currentMood') || 5;
+            let verseIndex;
+            
+            if (currentMood <= 3) {
+                // For low moods, choose comforting verses
+                verseIndex = Math.floor(Math.random() * 4); // First 4 are comforting
+            } else if (currentMood >= 7) {
+                // For high moods, choose uplifting verses
+                verseIndex = 4 + Math.floor(Math.random() * 4); // Last 4 are uplifting
+            } else {
+                // For neutral moods, choose any verse
+                verseIndex = Math.floor(Math.random() * verses.length);
+            }
+            
+            bibleVerseText.textContent = verses[verseIndex].text;
+            bibleVerseRef.textContent = verses[verseIndex].ref;
+            
+            if (bibleVerseContainer.style.display === 'block') {
+                bibleVerseContainer.style.display = 'none';
+                setTimeout(() => {
+                    bibleVerseContainer.style.display = 'block';
+                }, 100);
+            } else {
+                bibleVerseContainer.style.display = 'block';
+            }
+        });
+
+        // Age Space Modals
+        const teenSpace = document.getElementById('teen-space');
+        const adultSpace = document.getElementById('adult-space');
+        const seniorSpace = document.getElementById('senior-space');
+        
+        const teenModal = document.getElementById('teen-modal');
+        const adultModal = document.getElementById('adult-modal');
+        const seniorModal = document.getElementById('senior-modal');
+        
+        const closeTeenModal = document.getElementById('close-teen-modal');
+        const closeAdultModal = document.getElementById('close-adult-modal');
+        const closeSeniorModal = document.getElementById('close-senior-modal');
+        
+        teenSpace.addEventListener('click', () => {
+            teenModal.style.display = 'flex';
+        });
+        
+        adultSpace.addEventListener('click', () => {
+            adultModal.style.display = 'flex';
+        });
+        
+        seniorSpace.addEventListener('click', () => {
+            seniorModal.style.display = 'flex';
+        });
+        
+        closeTeenModal.addEventListener('click', () => {
+            teenModal.style.display = 'none';
+        });
+        
+        closeAdultModal.addEventListener('click', () => {
+            adultModal.style.display = 'none';
+        });
+        
+        closeSeniorModal.addEventListener('click', () => {
+            seniorModal.style.display = 'none';
+        });
+        
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === teenModal) {
+                teenModal.style.display = 'none';
+            }
+            if (e.target === adultModal) {
+                adultModal.style.display = 'none';
+            }
+            if (e.target === seniorModal) {
+                seniorModal.style.display = 'none';
+            }
+        });
+
+        // Logout Functionality
+        const logoutBtn = document.getElementById('logout-btn');
+        logoutBtn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to logout?')) {
+                // In a real app, this would redirect to logout
+                alert('Logged out successfully!');
+                // Redirect to login page
+                // window.location.href = 'login.html';
+            }
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const sidebar = document.querySelector('.sidebar');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            sidebar.style.display = sidebar.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Load user data
+        document.addEventListener('DOMContentLoaded', () => {
+            const username = localStorage.getItem('username') || 'User';
+            document.getElementById('user-name').textContent = username;
+            document.getElementById('welcome-name').textContent = username;
+            document.getElementById('user-avatar').textContent = username.charAt(0).toUpperCase();
+            
+            // Check for saved mood
+            const savedMood = localStorage.getItem('currentMood');
+            if (savedMood) {
+                moodPoints.forEach(point => {
+                    if (parseInt(point.getAttribute('data-value')) === parseInt(savedMood)) {
+                        point.classList.add('selected');
+                        moodFeedback.innerHTML = `
+                            <strong>Current Mood:</strong> ${savedMood}/10<br>
+                            ${moodDescriptions[savedMood]}
+                        `;
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

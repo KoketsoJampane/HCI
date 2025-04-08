@@ -1,0 +1,360 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home - MindHaven{% endblock %}
+
+{% block content %}
+<style>
+    /* Modern Therapy Website Styling */
+    :root {
+        --primary: #6a5acd;
+        --primary-light: #8a7ad3;
+        --secondary: #ff6b6b;
+        --light: #f8f9fa;
+        --dark: #2c3e50;
+        --text: #2c3e50;
+        --text-light: #7f8c8d;
+        --card-bg: rgba(255, 255, 255, 0.95);
+        --space-bg: rgba(255, 255, 255, 0.85);
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: var(--primary);
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), 
+        url('https://images.squarespace-cdn.com/content/v1/611317c4b0070247030f7fc3/08582c06-10b0-4789-8fc2-4be2596e2172/home+page+hero+image') no-repeat center center;
+        background-size: cover;
+        background-attachment: fixed;
+        min-height: 100vh;
+    }
+
+    .hero-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 4rem 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 80vh;
+    }
+
+    .hero-content {
+        max-width: 600px;
+        background: rgba(255, 255, 255, 0.92);
+        padding: 3rem;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        font-size: 1.3rem;
+        color: var(--text);
+        margin-bottom: 2rem;
+        font-weight: 400;
+    }
+
+    .hero-description {
+        font-size: 1.1rem;
+        color: var(--text-light);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+    }
+
+    .btn-primary {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(106, 90, 205, 0.3);
+    }
+
+    .btn-primary:hover {
+        background: var(--primary-light);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(106, 90, 205, 0.4);
+    }
+
+    .btn-primary i {
+        margin-left: 0.5rem;
+        transition: transform 0.3s;
+    }
+
+    .btn-primary:hover i {
+        transform: translateX(5px);
+    }
+
+    .features-section {
+        background: white;
+        padding: 4rem 2rem;
+        margin-top: -50px;
+        position: relative;
+        z-index: 2;
+        border-radius: 30px 30px 0 0;
+        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: 2.2rem;
+        color: var(--primary);
+        margin-bottom: 3rem;
+        position: relative;
+    }
+
+    .section-title::after {
+        content: "";
+        display: block;
+        width: 80px;
+        height: 4px;
+        background: var(--primary);
+        margin: 1rem auto;
+        border-radius: 2px;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .feature-card {
+        background: var(--card-bg);
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s;
+        text-align: center;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-icon {
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin-bottom: 1.5rem;
+    }
+
+    .feature-title {
+        font-size: 1.4rem;
+        color: var(--dark);
+        margin-bottom: 1rem;
+    }
+
+    .feature-description {
+        color: var(--text-light);
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .testimonial-section {
+        background: #f8f9fa;
+        padding: 4rem 2rem;
+        text-align: center;
+    }
+
+    .testimonial {
+        max-width: 800px;
+        margin: 0 auto;
+        font-style: italic;
+        font-size: 1.2rem;
+        color: var(--text);
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+    }
+
+    .testimonial-author {
+        font-weight: 600;
+        color: var(--primary);
+        font-style: normal;
+    }
+
+    .cta-section {
+        background: var(--primary);
+        color: white;
+        padding: 4rem 2rem;
+        text-align: center;
+    }
+
+    .cta-title {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .cta-description {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .btn-secondary {
+        background: white;
+        color: var(--primary);
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-secondary:hover {
+        background: #f0f0f0;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animated {
+        animation: fadeIn 0.8s ease-out forwards;
+    }
+
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.2rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.1rem;
+        }
+        
+        .hero-content {
+            padding: 2rem;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+        }
+    }
+</style>
+
+<!-- Hero Section -->
+<div class="hero-container">
+    <div class="hero-content animated">
+        <h1 class="hero-title">Find Peace in Your MindHaven</h1>
+        <p class="hero-subtitle">Your personal sanctuary for mental wellness and growth</p>
+        <p class="hero-description">
+            MindHaven combines professional therapeutic approaches with compassionate technology 
+            to support your mental health journey. Track your mood, journal your thoughts, and 
+            connect with resources tailored to your needs.
+        </p>
+        <a href="{% url 'login' %}" class="btn-primary">
+            Begin Your Journey <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="features-section">
+    <h2 class="section-title animated delay-1">How We Can Help</h2>
+    <div class="features-grid">
+        <div class="feature-card animated delay-1">
+            <div class="feature-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h3 class="feature-title">Mood Tracking</h3>
+            <p class="feature-description">
+                Monitor your emotional patterns over time with our intuitive mood tracker 
+                to gain valuable insights into your mental wellbeing.
+            </p>
+        </div>
+        
+        <div class="feature-card animated delay-2">
+            <div class="feature-icon">
+                <i class="fas fa-book-open"></i>
+            </div>
+            <h3 class="feature-title">Therapeutic Journal</h3>
+            <p class="feature-description">
+                Express your thoughts and feelings in a private, secure space with 
+                guided prompts to facilitate self-reflection and growth.
+            </p>
+        </div>
+        
+        <div class="feature-card animated delay-3">
+            <div class="feature-icon">
+                <i class="fas fa-robot"></i>
+            </div>
+            <h3 class="feature-title">AI Companion</h3>
+            <p class="feature-description">
+                MindHaven  is a sanctuary for all
+                A safe and therapeutic home for your mental health.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Testimonial Section -->
+<div class="testimonial-section">
+    <div class="testimonial animated delay-2">
+        "MindHaven has been a game-changer for my mental health routine. The mood tracker helps me recognize patterns I never noticed before, and the journal prompts have guided me through some tough moments."
+    </div>
+    <div class="testimonial-author">- Jampane K., MindHaven User</div>
+</div>
+
+<!-- Call to Action Section -->
+<div class="cta-section">
+    <h2 class="cta-title animated delay-1">Ready to prioritize your mental health?</h2>
+    <p class="cta-description animated delay-2">
+        Join thousands of others who have found support and tools for their mental wellness journey through MindHaven.
+    </p>
+    
+</div>
+
+<script>
+    // Simple animation trigger as elements come into view
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animated');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.features-section, .testimonial-section, .cta-section').forEach(section => {
+        observer.observe(section);
+    });
+</script>
+{% endblock %}

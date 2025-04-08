@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About mindHaven | Your Mental Wellness Companion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6a5acd;
+            --secondary: #ff6b6b;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --text: #333;
+            --text-light: #6c757d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: #f5f5f5;
+            background-image: url('data:image/jpeg;base64,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');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.92);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Navigation Link */
+        .nav-link {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 1rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .nav-link i {
+            margin-right: 8px;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary);
+            transform: translateX(-3px);
+        }
+
+        /* Accessibility Controls */
+        .accessibility-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .accessibility-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0.2rem;
+            transition: all 0.3s;
+        }
+
+        .accessibility-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Mission Section */
+        .mission {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            align-items: center;
+        }
+
+        .mission-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .mission-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .mission-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s;
+        }
+
+        .mission-image:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Features Section */
+        .features {
+            margin-bottom: 3rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--primary);
+            color: white;
+            padding: 3rem;
+            border-radius: 10px;
+            margin-bottom: 3rem;
+        }
+
+        .contact-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            font-family: inherit;
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: white;
+            color: var(--primary);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: var(--secondary);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-light);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        /* Accessibility Classes */
+        .high-contrast {
+            background-color: black !important;
+            color: white !important;
+        }
+
+        .high-contrast .container,
+        .high-contrast .feature-card {
+            background-color: #222 !important;
+            color: white !important;
+            border-color: #444 !important;
+        }
+
+        .large-text {
+            font-size: 1.2rem;
+        }
+
+        .extra-large-text {
+            font-size: 1.4rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .contact-form {
+                grid-template-columns: 1fr;
+            }
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            .mission {
+                flex-direction: column;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animated {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <!-- Accessibility Controls -->
+    <div class="accessibility-panel">
+        <h2 style="font-size: 1rem; margin-bottom: 0.5rem;">Accessibility</h2>
+        <button class="accessibility-btn" id="contrast-btn">
+            <i class="fas fa-adjust"></i> High Contrast
+        </button>
+        <button class="accessibility-btn" id="text-size-btn">
+            <i class="fas fa-text-height"></i> Increase Text
+        </button>
+        <button class="accessibility-btn" id="reset-accessibility">
+            <i class="fas fa-undo"></i> Reset
+        </button>
+    </div>
+
+    <div class="container">
+        <header class="animated">
+            <h1>About mindHaven</h1>
+            <p class="subtitle">Your compassionate digital sanctuary for mental wellness and emotional growth</p>
+            <a href="/" class="nav-link">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+        </header>
+
+        <section class="mission animated delay-1">
+            <div class="mission-text">
+                <h2>Our Mission</h2>
+                <p>At mindHaven, we believe mental health care should be accessible, compassionate, and personalized. Our platform was born from the understanding that everyone deserves a safe space to explore their emotions, track their mental wellbeing, and find support whenever they need it.</p>
+                <p>We combine evidence-based therapeutic approaches with intuitive technology to create a holistic mental wellness companion that adapts to your unique needs and journey.</p>
+            </div>
+            <div class="mission-image">
+                <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Peaceful meditation scene" loading="lazy">
+            </div>
+        </section>
+
+        <section class="features animated delay-2">
+            <h2>What We Offer</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Mood Tracking</h3>
+                    <p>Our intuitive mood tracker helps you identify patterns in your emotional wellbeing over time, giving you valuable insights into your mental health journey.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-book"></i></div>
+                    <h3>Reflective Journal</h3>
+                    <p>A private space to express your thoughts and feelings, with prompts to guide your self-reflection and growth.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-robot"></i></div>
+                    <h3>AI Companion</h3>
+                    <p>Our compassionate AI therapist provides immediate support, offering evidence-based coping strategies whenever you need them.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-bible"></i></div>
+                    <h3>Spiritual Support</h3>
+                    <p>Personalized scripture recommendations that speak to your current emotional state, providing comfort and perspective.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-bell"></i></div>
+                    <h3>Gentle Reminders</h3>
+                    <p>Thoughtful notifications that encourage self-care and mindfulness throughout your day.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-lock"></i></div>
+                    <h3>Safe & Private</h3>
+                    <p>Your data is encrypted and never shared. This is your personal sanctuary for healing and growth.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact">
+            <h2 style="color: white;">Get In Touch</h2>
+            <p>We'd love to hear from you! Whether you have feedback, questions, or just want to share your mindHaven experience.</p>
+            
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name"><i class="fas fa-user"></i> Name</label>
+                    <input type="text" id="name" name="name" required aria-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="email" name="email" required aria-required="true">
+                </div>
+                <div class="form-group full-width">
+                    <label for="message"><i class="fas fa-comment"></i> Message</label>
+                    <textarea id="message" name="message" required aria-required="true"></textarea>
+                </div>
+                <div class="form-group full-width">
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <footer>
+            <p>© 2023 mindHaven. All rights reserved.</p>
+            <p>Your journey to mental wellness starts here.</p>
+            <p>
+                <a href="/" class="nav-link">
+                    <i class="fas fa-home"></i> Return to Home
+                </a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Accessibility Features
+        const contrastBtn = document.getElementById('contrast-btn');
+        const textSizeBtn = document.getElementById('text-size-btn');
+        const resetBtn = document.getElementById('reset-accessibility');
+        const body = document.body;
+
+        // High Contrast Mode
+        contrastBtn.addEventListener('click', () => {
+            body.classList.toggle('high-contrast');
+            const icon = contrastBtn.querySelector('i');
+            if (body.classList.contains('high-contrast')) {
+                contrastBtn.innerHTML = '<i class="fas fa-adjust"></i> Normal Contrast';
+            } else {
+                contrastBtn.innerHTML = '<i class="fas fa-adjust"></i> High Contrast';
+            }
+        });
+
+        // Text Size Toggle
+        let textSizeState = 0;
+        textSizeBtn.addEventListener('click', () => {
+            textSizeState = (textSizeState + 1) % 3;
+            
+            body.classList.remove('large-text', 'extra-large-text');
+            
+            if (textSizeState === 1) {
+                body.classList.add('large-text');
+                textSizeBtn.innerHTML = '<i class="fas fa-text-height"></i> Larger Text';
+            } else if (textSizeState === 2) {
+                body.classList.add('extra-large-text');
+                textSizeBtn.innerHTML = '<i class="fas fa-text-height"></i> Normal Text';
+            } else {
+                textSizeBtn.innerHTML = '<i class="fas fa-text-height"></i> Increase Text';
+            }
+        });
+
+        // Reset Accessibility
+        resetBtn.addEventListener('click', () => {
+            body.className = '';
+            textSizeState = 0;
+            contrastBtn.innerHTML = '<i class="fas fa-adjust"></i> High Contrast';
+            textSizeBtn.innerHTML = '<i class="fas fa-text-height"></i> Increase Text';
+        });
+
+        // Form Submission
+        const contactForm = document.querySelector('.contact-form');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            contactForm.reset();
+        });
+
+        // Animate elements when they come into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
